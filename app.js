@@ -13,10 +13,10 @@ app.use(express.json());
 
 
 app.get('/',(req,res)=>{
-  res.send("Your API is Started")
+  res.send("Your API is Started");
 });
 
-app.use('/auth',route);
+app.use('/api',route);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
