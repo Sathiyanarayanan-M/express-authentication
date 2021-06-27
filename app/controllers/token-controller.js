@@ -16,5 +16,8 @@ exports.generateToken = async (id) => {
     var token = jwt.sign({ id }, process.env.SECRET_KEY, {
         expiresIn: process.env.EXPIRES_IN
     });
+    var refreshToken = jwt.sign({id},process.env.REFRESH_SECRET_KEY,{
+        expiresIn:process.env.REFRESH_LIFE
+    });
     return token
 }

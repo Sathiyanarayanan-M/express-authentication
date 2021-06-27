@@ -10,7 +10,7 @@ module.exports = function(req,res,next) {
     if(token){
         jwt.verify(token,process.env.SECRET_KEY, function(err,decoded){
             if(err){
-                return res.status(401).send({err:err,message:"Unauthorized Token"})
+               return next(err);
             }
             req.decoded = decoded.id;
             next();
