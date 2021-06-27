@@ -14,6 +14,8 @@
    ```env
     MONGODB_URI = Your mongodb connection url
     PORT = Port number
-    SECRET_KEY = secret key for JWT token
-    EXPIRES_IN = Jwt expiration time / in seconds
+    SECRET_KEY = access token secret key for JWT token
+    EXPIRES_IN = Jwt expiration time
+    REFRESH_SECRET_KEY = Refresh token secret key
+    REFRESH_LIFE = refresh token expiration time 
    ```
