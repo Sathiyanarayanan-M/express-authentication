@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user-model");
 const isEmpty = require("../validation/userValidation").isEmpty;
 
-const {verifyToken,generateToken} = require("./token");
+const {verifyToken,generateToken} = require("./token-controller");
 
 
 exports.login = async (req, res) => {
@@ -68,8 +68,8 @@ exports.register = async (req, res) => {
 }
 
 
-exports.profile = (req,res,next) => {
-    var token = req.headers['x-access-token']
-    if(!token) return res.send("token not found");
-    verifyToken(token,req,res,next);
-};
+// exports.profile = (req,res,next) => {
+//     var token = req.headers['x-access-token']
+//     if(!token) return res.send("token not found");
+//     verifyToken(token,req,res,next);
+// };
