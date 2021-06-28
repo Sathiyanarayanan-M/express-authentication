@@ -22,7 +22,6 @@ app.get('/',(req,res)=>{
 });
 
 app.use('/api',route);
-// app.use(token_middleware);
 app.use('/secret',token_middleware,secret);
 app.use(errorHandler);
 

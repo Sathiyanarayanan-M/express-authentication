@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-// const login = require("../controllers/auth").login;
-// const register = require("../controllers/auth").register;
 const controller = require("../controllers/auth");
-// const profile = require("../controllers/auth").profile;
+const tokenController = require("../controllers/token-controller").token
 
 
 router.route('/auth/login').get((req, res) => {
@@ -19,7 +17,7 @@ router.route("/auth/register").get((req, res) => {
 
 router.route("/auth/register").post(controller.register);
 
-router.route("/token").post(controller.token);
+router.route("/token").post(tokenController);
 
 // router.route("/profile").get(profile);
 
