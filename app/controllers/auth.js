@@ -5,7 +5,9 @@ const isEmpty = require("../validation/userValidation").isEmpty;
 
 const errorHandler = require("../middleware/errorHandling");
 
-const {verifyToken,generateToken} = require("./token-controller");
+const {generateToken,generateRefreshToken} = require("./token-controller");
+
+const tokenList = {};
 
 
 exports.login = async (req, res,next) => {
@@ -14,18 +16,24 @@ exports.login = async (req, res,next) => {
         try {
             const user = await User.findOne({ email: req.body.email });
             if (!user) {
-                next({code:404,message:"user not found"});
+                return next({code:404,message:"user not found"});
             }
             else {
                 bcrypt.compare(req.body.password, user.password, async (err, isMatch) => {
                     if (err) {
-                        next(err);
+                      return next(err);
                     } else if (!isMatch) {
                           return next({code:401,message:"Invalid Credentials"});
                     } else {
-                        var token = await generateToken(user._id);
-                        if (token){
-                            return res.send({auth:true,message:"Logged In",token:token});
+                        const tokenId = {
+                            email:user.email,
+                            id:user._id
+                        }
+                        var token = await generateToken(tokenId);
+                        var refreshToken = await generateRefreshToken(tokenId);
+                        if (token && refreshToken){
+                            tokenList.refreshToken = refreshToken
+                            return res.send({auth:true,message:"Logged In",token:token,refreshToken:refreshToken,userId:user._id});
                         }
                         else{
                           return next({code:500, message:"Failed to generate token"});
@@ -73,6 +81,23 @@ exports.register = async (req, res) => {
     }
     else {
       return next(validation);
+    }
+}
+
+
+
+exports.token = async (req,res,next) => {
+    const postData = req.body;
+    if (postData.refreshToken && postData.refreshToken in tokenList){
+        const tokenId = {
+            email:postData.email,
+            id:user._id
+        }
+        const token = await generateToken(tokenId);
+        return res.send({token:token})
+    }
+    else{
+       return next({code:403,message:"refreshToken Not Provided"});
     }
 }
 

@@ -12,8 +12,8 @@ module.exports = function(req,res,next) {
             if(err){
                return next(err);
             }
-            req.decoded = decoded.id;
-            next();
+            req.decoded = {id:decoded.id,email:decoded.email};
+            return res.send(req.decoded);
         });
     }
     else{
