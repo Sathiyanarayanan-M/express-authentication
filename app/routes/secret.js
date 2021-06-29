@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 
-router.route('/').get((req,res) => {
+router.route('/').get((req, res) => {
     res.send("hey you are accessing the secure part");
 })
 

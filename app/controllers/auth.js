@@ -21,7 +21,7 @@ exports.login = async (req, res, next) => {
                     } else if (!isMatch) {
                         return next({ code: 401, message: "Invalid Credentials" });
                     } else {
-                        
+
                         var token = await generateToken(user._id);
                         var refreshToken = await generateRefreshToken(user._id);
                         if (token && refreshToken) {
