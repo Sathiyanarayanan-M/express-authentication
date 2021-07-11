@@ -4,7 +4,7 @@
 
 1. Clone the repository
    ```sh
-    $ git clone https://github.com/Sathiyanarayanan-M/node-authentication.git
+    $ git clone https://github.com/Sathiyanarayanan-M/express-authentication.git
    ```
 2. Install NPM packages
    ```sh
