@@ -1,6 +1,6 @@
 const email_pattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-exports.loginValidation = async (data) => {
+exports.loginValidation = (data) => {
     let errors = {}
     if (!(data.email.match(email_pattern))) {
         errors.code = 400;
@@ -13,7 +13,7 @@ exports.loginValidation = async (data) => {
     return errors
 }
 
-exports.registerValidation = async (data) => {
+exports.registerValidation =  (data) => {
     let errors = {}
     if (!(data.email.match(email_pattern))) {
         errors.code = 400;

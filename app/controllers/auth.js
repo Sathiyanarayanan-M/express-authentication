@@ -22,11 +22,12 @@ exports.login = async (req, res, next) => {
                         return next({ code: 401, message: "Invalid Credentials" });
                     } else {
 
-                        var token = await generateToken(user._id);
+                        var accessToken = await generateToken(user._id);
                         var refreshToken = await generateRefreshToken(user._id);
-                        if (token && refreshToken) {
-                            return res.send({ auth: true, message: "Logged In", token: token, refreshToken: refreshToken });
+                        if (accessToken && refreshToken) {
+                            return res.send({ auth: true,success: true, message: "Logged In", accessToken: accessToken, refreshToken: refreshToken });
                         }
+
                         else {
                             return next({ code: 500, message: "Failed to generate token" });
                         }
@@ -44,7 +45,7 @@ exports.login = async (req, res, next) => {
 }
 
 
-exports.register = async (req, res) => {
+exports.register = async (req, res,next) => {
     const validation = require("../validation/userValidation").registerValidation(req.body);
     if (isEmpty(validation)) {
         User.findOne({ email: req.body.email }).then(user => {
@@ -63,7 +64,7 @@ exports.register = async (req, res) => {
                                 return next(err);
                             }
                             else {
-                                return res.send("Successfully Registered");
+                                return res.send({message:"Successfully Registered",success: true,});
                             }
                         });
                     });

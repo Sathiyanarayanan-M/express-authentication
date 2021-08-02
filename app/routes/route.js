@@ -3,6 +3,10 @@ const router = express.Router();
 
 const controller = require("../controllers/auth");
 const tokenController = require("../controllers/token-controller").token
+const privateScreen = require("./privateScreen");
+const token_middleware = require("../middleware/tokenCheker");
+
+
 
 //Login
 router.route('/auth/login').get((req, res) => {
@@ -17,6 +21,10 @@ router.route("/auth/register").get((req, res) => {
 });
 
 router.route("/auth/register").post(controller.register);
+
+
+router.route("/dashboard").get(token_middleware,privateScreen);
+
 
 //Generate access token by refresh token
 router.route("/token").post(tokenController);
